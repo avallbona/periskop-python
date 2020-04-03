@@ -11,6 +11,8 @@ class ExceptionExporter:
 
     def export(self) -> str:
         """
+        Export the collection of errors in JSON format
+
         :return: str
         """
         return json.dumps(dataclasses.asdict(self._collector.get_aggregated_exceptions()))

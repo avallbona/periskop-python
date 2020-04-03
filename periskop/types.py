@@ -18,7 +18,8 @@ class ExceptionInstance:
     cls: str
     message: str
     stacktrace: List[str]
-    cause: str = ""
+    # should be ExceptionInstance, but we don't needed in this lib
+    cause: object = None
 
 
 @dataclass
@@ -61,6 +62,11 @@ class AggregatedException:
     severity: str = SEVERITY_ERROR
 
     def add_exception(self, exception_with_context: ExceptionWithContext):
+        """
+        Add exception to the list of latest errors up to MAX_ERRORS
+
+        :param ExceptionWithContext exception_with_context: exception with context that is being reported
+        """
         if len(self.latest_errors) >= MAX_ERRORS:
             self.latest_errors.pop()
         self.latest_errors.append(exception_with_context)

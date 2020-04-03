@@ -1,5 +1,3 @@
-import dataclasses
-import json
 import traceback
 from typing import Dict
 
@@ -21,7 +19,7 @@ class ExceptionCollector:
 
     def report_with_context(self, exception: Exception, http_context: HTTPContext):
         """
-        Report an exception with
+        Report an exception with the context of an HTTP request
 
         :param Exception exception: captured exception
         :param HTTPContext http_context: context of an HTTP request

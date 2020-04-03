@@ -1,14 +1,3 @@
-import pytest
-
-from periskop.collector import ExceptionCollector
-from periskop.types import HTTPContext
-
-
-@pytest.fixture
-def collector():
-    return ExceptionCollector()
-
-
 def test_add_exception(collector):
     exception = Exception()
     collector._add_exception(exception, None)
@@ -26,10 +15,8 @@ def test_report(collector):
     assert len(exception_with_context.error.stacktrace) != 0
 
 
-def test_report_with_context(collector):
-    http_context = HTTPContext(request_method="GET", request_url="http://example.com",
-                               request_headers={"Cache-Control": "no-cache"})
-    collector.report_with_context(Exception("error"), http_context)
+def test_report_with_context(collector, sample_http_context):
+    collector.report_with_context(Exception("error"), sample_http_context)
     assert len(collector._aggregated_exceptions) == 1
     exception_with_context = list(collector._aggregated_exceptions.values())[0].latest_errors[0]
     assert exception_with_context.http_context.request_method == "GET"
