@@ -1,6 +1,3 @@
-import dataclasses
-import json
-
 from .collector import ExceptionCollector
 
 
@@ -15,4 +12,4 @@ class ExceptionExporter:
 
         :return: str
         """
-        return json.dumps(dataclasses.asdict(self._collector.get_aggregated_exceptions()))
+        return self._collector.get_aggregated_exceptions().to_json()  # type: ignore

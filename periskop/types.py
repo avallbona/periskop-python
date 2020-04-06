@@ -1,9 +1,9 @@
 import hashlib
-import uuid
-from dataclasses import dataclass
+import uuid as _uuid
+from dataclasses import dataclass, field
+from dataclasses_json import config, dataclass_json
 from datetime import datetime
-from typing import List, Dict
-
+from typing import List, Dict, Optional
 
 SEVERITY_INFO = "info"
 SEVERITY_WARNING = "warning"
@@ -13,15 +13,17 @@ MAX_ERRORS = 10
 NUM_HASH_CHARS = 8
 
 
+@dataclass_json
 @dataclass
 class ExceptionInstance:
-    cls: str
+    cls: str = field(metadata=config(field_name="class"))
     message: str
     stacktrace: List[str]
     # should be ExceptionInstance, but we don't needed in this lib
     cause: object = None
 
 
+@dataclass_json
 @dataclass
 class HTTPContext:
     request_method: str
@@ -29,12 +31,13 @@ class HTTPContext:
     request_headers: Dict[str, str]
 
 
+@dataclass_json
 @dataclass
 class ExceptionWithContext:
     error: ExceptionInstance
-    http_context: HTTPContext
+    http_context: Optional[HTTPContext] = None
     severity: str = SEVERITY_ERROR
-    uuid: str = str(uuid.uuid1())
+    uuid: str = str(_uuid.uuid1())
     timestamp: str = datetime.utcnow().isoformat()
 
     def _hash_exception(self, exception: str):
@@ -54,6 +57,7 @@ class ExceptionWithContext:
         return f"{self.error.cls}@{error_hash}"
 
 
+@dataclass_json
 @dataclass
 class AggregatedException:
     aggregation_key: str
@@ -73,7 +77,7 @@ class AggregatedException:
         self.total_count += 1
 
 
+@dataclass_json
 @dataclass
 class Payload:
     aggregated_errors: List[AggregatedException]
-

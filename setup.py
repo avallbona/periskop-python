@@ -31,15 +31,19 @@ def get_email(package):
     init_py = codecs.open(os.path.join(package, '__init__.py'), encoding='utf-8').read()
     return re.search("^__email__ = ['\"]([^'\"]+)['\"]", init_py, re.MULTILINE).group(1)
 
+
 setup(
     name='periskop_python',
-    version=get_version('periskop_python'),
+    version=get_version('periskop'),
     packages=find_packages(),
     include_package_data=True,
     description='Configurable Python library for metrics and events reporting',
     long_description=codecs.open(os.path.join(os.path.dirname(__file__), 'README.md'), encoding='utf-8').read(),
-    author=get_author('kaneda'),
-    author_email=get_email('kaneda'),
+    author=get_author('periskop'),
+    author_email=get_email('periskop'),
+    install_requires=[
+        'dataclasses-json==0.4.2',
+    ],
     classifiers=[
         'Intended Audience :: Developers',
         'Programming Language :: Python',

@@ -13,3 +13,7 @@ def collector():
 def sample_http_context():
     return HTTPContext(request_method="GET", request_url="http://example.com",
                        request_headers={"Cache-Control": "no-cache"})
+
+
+def get_exception_with_context(collector):
+    return list(collector._aggregated_exceptions.values())[0].latest_errors[0]

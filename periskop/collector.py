@@ -7,7 +7,7 @@ from .types import HTTPContext, ExceptionInstance, ExceptionWithContext, Aggrega
 class ExceptionCollector:
 
     def __init__(self):
-        self._aggregated_exceptions = {}# Dict[str, AggregatedException]
+        self._aggregated_exceptions: Dict[str, AggregatedException] = {}
 
     def report(self, exception: Exception):
         """
@@ -15,7 +15,7 @@ class ExceptionCollector:
 
         :param Exception exception: captured exception
         """
-        self._add_exception(exception, None)
+        self._add_exception(exception)
 
     def report_with_context(self, exception: Exception, http_context: HTTPContext):
         """
@@ -34,8 +34,8 @@ class ExceptionCollector:
         """
         return Payload(aggregated_errors=list(self._aggregated_exceptions.values()))
 
-    def _add_exception(self, exception: Exception, http_context: HTTPContext):
-        stacktrace = traceback.format_exc().split("\n")
+    def _add_exception(self, exception: Exception, http_context: HTTPContext = None):
+        stacktrace = traceback.format_exc().strip().split("\n")
         error_class = type(exception).__name__
 
         exception_instance = ExceptionInstance(cls=error_class, message=str(exception),
