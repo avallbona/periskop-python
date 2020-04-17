@@ -1,21 +1,3 @@
-# periskop-python
-
-[![Build Status](https://api.cirrus-ci.com/github/soundcloud/periskop-python.svg)](https://cirrus-ci.com/github/soundcloud/periskop-go)
-
-[Periskop](https://github.com/soundcloud/periskop) requires collecting and aggregating exceptions on the client side,
-as well as exposing them via an HTTP endpoint using a well defined format.
-
-This library provides low level collection and rendering capabilities
-
-## Usage
-
-```
-pip instal periskop
-```
-
-### Example
-
-```python
 import json
 from http.server import HTTPServer
 
@@ -45,5 +27,3 @@ if __name__ == "__main__":
     handler = exception_http_handler(path="/-/exceptions", exporter=ExceptionExporter(collector))
     http_server = HTTPServer(server_address, handler)
     http_server.serve_forever()
-
-```

@@ -1,5 +1,5 @@
 import hashlib
-import uuid as _uuid
+import uuid
 from dataclasses import dataclass, field
 from dataclasses_json import config, dataclass_json
 from datetime import datetime
@@ -28,7 +28,7 @@ class ExceptionInstance:
 class HTTPContext:
     request_method: str
     request_url: str
-    request_headers: Dict[str, str]
+    request_headers: Dict[str, str] = None
 
 
 @dataclass_json
@@ -37,8 +37,12 @@ class ExceptionWithContext:
     error: ExceptionInstance
     http_context: Optional[HTTPContext] = None
     severity: str = SEVERITY_ERROR
-    uuid: str = str(_uuid.uuid1())
-    timestamp: str = datetime.utcnow().isoformat()
+    uuid: str = ""
+    timestamp: str = ""
+
+    def __post_init__(self):
+        self.uuid = str(uuid.uuid1())
+        self.timestamp = datetime.utcnow().isoformat(timespec="milliseconds") + "Z"
 
     def _hash_exception(self, exception: str):
         h = hashlib.md5(exception.encode())

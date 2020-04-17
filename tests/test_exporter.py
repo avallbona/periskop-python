@@ -1,15 +1,9 @@
 import json
-import pytest
-
-from periskop.exporter import ExceptionExporter
-from .conftest import get_exception_with_context
+from unittest import mock
+from freezegun import freeze_time
 
 
-@pytest.fixture
-def exporter(collector):
-    return ExceptionExporter(collector)
-
-
+@freeze_time("2019-10-11 12:47:25.595")
 def test_export(collector, exporter, sample_http_context):
     expected = """
 {
@@ -27,7 +21,7 @@ def test_export(collector, exporter, sample_http_context):
             "cause": null
           },
           "uuid": "5d9893c6-51d6-11ea-8aad-f894c260afe5",
-          "timestamp": "2020-02-17T22:42:45Z",
+          "timestamp": "2019-10-11T12:47:25.595Z",
           "severity": "error",
           "http_context": {
             "request_method": "GET",
@@ -41,10 +35,7 @@ def test_export(collector, exporter, sample_http_context):
     }
   ]
 }"""
-    collector.report_with_context(exception=Exception("test"), http_context=sample_http_context)
-    exception_with_context = get_exception_with_context(collector)
-    exception_with_context.uuid = "5d9893c6-51d6-11ea-8aad-f894c260afe5"
-    exception_with_context.timestamp = "2020-02-17T22:42:45Z"
-    exported = exporter.export()
-    print(json.loads(exported))
-    assert json.loads(exported) == json.loads(expected)
+    with mock.patch("uuid.uuid1", return_value="5d9893c6-51d6-11ea-8aad-f894c260afe5"):
+        collector.report_with_context(exception=Exception("test"), http_context=sample_http_context)
+        exported = exporter.export()
+        assert json.loads(exported) == json.loads(expected)
