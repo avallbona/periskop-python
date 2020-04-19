@@ -52,4 +52,4 @@ if __name__ == "__main__":
 
 For running tests [pytest](https://docs.pytest.org) is needed. A recommended way to run all check is installing [tox](https://tox.readthedocs.io/en/latest/install.html) and then just type `tox`. This will run `pytest` tests, [flake8](https://flake8.pycqa.org) and [mypy](http://mypy-lang.org/) static analyzers.
 
-Alternatively you can just run `pip install -r requirements-tests.txt` and the run `pytest`.
+Alternatively you can run `pip install -r requirements-tests.txt` and then run `pytest`.

@@ -1,11 +1,16 @@
 import traceback
 from typing import Dict
 
-from .models import HTTPContext, ExceptionInstance, ExceptionWithContext, AggregatedException, Payload
+from .models import (
+    HTTPContext,
+    ExceptionInstance,
+    ExceptionWithContext,
+    AggregatedException,
+    Payload,
+)
 
 
 class ExceptionCollector:
-
     def __init__(self):
         self._aggregated_exceptions: Dict[str, AggregatedException] = {}
 
@@ -38,12 +43,18 @@ class ExceptionCollector:
         stacktrace = traceback.format_exc().strip().split("\n")
         error_class = type(exception).__name__
 
-        exception_instance = ExceptionInstance(cls=error_class, message=str(exception),
-                                               stacktrace=stacktrace)
-        exception_with_context = ExceptionWithContext(error=exception_instance, http_context=http_context)
+        exception_instance = ExceptionInstance(
+            cls=error_class, message=str(exception), stacktrace=stacktrace
+        )
+        exception_with_context = ExceptionWithContext(
+            error=exception_instance, http_context=http_context
+        )
 
         aggregation_key = exception_with_context.aggregation_key()
         if aggregation_key not in self._aggregated_exceptions:
-            self._aggregated_exceptions[aggregation_key] = AggregatedException(aggregation_key=aggregation_key,
-                                                                               latest_errors=[])
-        self._aggregated_exceptions[aggregation_key].add_exception(exception_with_context)
+            self._aggregated_exceptions[aggregation_key] = AggregatedException(
+                aggregation_key=aggregation_key, latest_errors=[]
+            )
+        self._aggregated_exceptions[aggregation_key].add_exception(
+            exception_with_context
+        )

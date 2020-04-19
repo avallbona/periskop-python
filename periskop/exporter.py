@@ -2,7 +2,6 @@ from .collector import ExceptionCollector
 
 
 class ExceptionExporter:
-
     def __init__(self, collector: ExceptionCollector):
         self._collector = collector
 
