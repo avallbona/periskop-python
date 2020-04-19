@@ -28,7 +28,7 @@ class ExceptionInstance:
 class HTTPContext:
     request_method: str
     request_url: str
-    request_headers: Dict[str, str] = None
+    request_headers: Optional[Dict[str, str]] = None
 
 
 @dataclass_json

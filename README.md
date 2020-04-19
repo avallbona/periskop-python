@@ -7,13 +7,13 @@ as well as exposing them via an HTTP endpoint using a well defined format.
 
 This library provides low level collection and rendering capabilities
 
-## Usage
+## Install
 
 ```
-pip instal periskop
+pip install periskop
 ```
 
-### Example
+## Usage example
 
 ```python
 import json
@@ -22,7 +22,7 @@ from http.server import HTTPServer
 from periskop.collector import ExceptionCollector
 from periskop.exporter import ExceptionExporter
 from periskop.handler import exception_http_handler
-from periskop.types import HTTPContext
+from periskop.models import HTTPContext
 
 
 def faulty_json():
@@ -47,3 +47,9 @@ if __name__ == "__main__":
     http_server.serve_forever()
 
 ```
+
+## Run tests
+
+For running tests [pytest](https://docs.pytest.org) is needed. A recommended way to run all check is installing [tox](https://tox.readthedocs.io/en/latest/install.html) and then just type `tox`. This will run `pytest` tests, [flake8](https://flake8.pycqa.org) and [mypy](http://mypy-lang.org/) static analyzers.
+
+Alternatively you can just run `pip install -r requirements-tests.txt` and the run `pytest`.

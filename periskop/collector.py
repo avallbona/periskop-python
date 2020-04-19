@@ -1,7 +1,7 @@
 import traceback
 from typing import Dict
 
-from .types import HTTPContext, ExceptionInstance, ExceptionWithContext, AggregatedException, Payload
+from .models import HTTPContext, ExceptionInstance, ExceptionWithContext, AggregatedException, Payload
 
 
 class ExceptionCollector:

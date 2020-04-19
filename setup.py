@@ -1,11 +1,7 @@
 import os
 import re
 import codecs
-
-try:
-    from setuptools import setup, find_packages
-except ImportError:
-    from distutils.core import setup
+from setuptools import setup, find_packages
 
 
 def get_version(package):
@@ -37,7 +33,7 @@ setup(
     version=get_version('periskop'),
     packages=find_packages(),
     include_package_data=True,
-    description='Configurable Python library for metrics and events reporting',
+    description='Periskop Python client',
     long_description=codecs.open(os.path.join(os.path.dirname(__file__), 'README.md'), encoding='utf-8').read(),
     author=get_author('periskop'),
     author_email=get_email('periskop'),
@@ -47,6 +43,7 @@ setup(
     classifiers=[
         'Intended Audience :: Developers',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Operating System :: OS Independent',

@@ -4,6 +4,14 @@ from .exporter import ExceptionExporter
 
 
 def exception_http_handler(path: str, exporter: ExceptionExporter):
+    """
+    Factory function to create an HTTP Handler wraped with a Periskop exporter.
+
+    :param str path: path to server exported exceptions
+    :param ExceptionExporter exporter: exporter object to use as expose a JSON
+
+    :return ExceptionBaseHTTPRequestHandler:
+    """
     class ExceptionBaseHTTPRequestHandler(BaseHTTPRequestHandler):
 
         def __init__(self, *args, **kwargs):

@@ -4,7 +4,7 @@ from http.server import HTTPServer
 from periskop.collector import ExceptionCollector
 from periskop.exporter import ExceptionExporter
 from periskop.handler import exception_http_handler
-from periskop.types import HTTPContext
+from periskop.models import HTTPContext
 
 
 def faulty_json():
