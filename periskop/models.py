@@ -1,9 +1,10 @@
 import hashlib
 import uuid
 from dataclasses import dataclass, field
-from dataclasses_json import config, dataclass_json
 from datetime import datetime
-from typing import List, Dict, Optional
+from typing import Dict, List, Optional
+
+from dataclasses_json import config, dataclass_json
 
 SEVERITY_INFO = "info"
 SEVERITY_WARNING = "warning"

@@ -2,10 +2,10 @@ import traceback
 from typing import Dict
 
 from .models import (
-    HTTPContext,
+    AggregatedException,
     ExceptionInstance,
     ExceptionWithContext,
-    AggregatedException,
+    HTTPContext,
     Payload,
 )
 
